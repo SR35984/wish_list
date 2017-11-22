@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Wish Items</title>
+</head>
+
+<body>
+	<div class="wrapper" style="padding-left: 15px;">
+		<p style="display: inline-block; padding-left: 550px;">
+			<a href="{% url 'dashboard' %}" style="padding-right: 10px;">Home</a>
+			<a href="{% url 'logout' %}">Logout</a>
+		</p>
+		<h1 style="margin-top: 0px;">{{ item.name }}</h1>
+		<h4>Users who added this product/item under their wish list:</h4>
+		{% for user in users %}
+			<p>{{ user.name }}</p>
+		{% endfor %}
+	</div>
+
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dashboard</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+	 crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+	 crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+	 crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+	 crossorigin="anonymous"></script>
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'wish_app/style.css' %}">
+</head>
+<body>
+	<div class="wrapper" style="padding-left: 15px; padding-top: 15px">
+		<a href="{% url 'logout' %}" style="float: right; padding-right: 100px;">Logout</a>
+		<h1>Hello, {{ user.name }}!</h1><br>
+		<div class="container">
+			<h4>Your Wish List:</h4>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Item</th>
+						<th>Added by</th>
+						<th>Date Added</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for item in user.wishes.all %}
+					<tr>
+						<td><a href='wish_items/{{item.id}}'> {{ item.name }}</a></td>
+						<td>{{ item.added_by.name }}</td>
+						<td>{{ item.created_at }}</td>
+						<td><form action="{% url 'remove_wish' item_id=item.id %}" class="remove_wish" style="display: inline-block;" method="post">
+								{% csrf_token %}
+								<button type="submit">Remove from my WishList</button>
+							</form>
+							<form action="{% url 'delete' item_id=item.id %}" class="delete" style="display: inline-block;" method="post">
+									{% csrf_token %}
+									<button type="submit">Delete</button>
+							</form></td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<hr>
+			<h4>Other Users' Wish List:</h4>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Item</th>
+						<th>Added by</th>
+						<th>Date Added</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for item in notwished %}
+						<tr>
+							<td><a href='wish_items/{{item.id}}'> {{ item.name }}</a></td>
+							<td>{{ item.added_by.name }}</td>
+							<td>{{ item.created_at }}</td>
+							<td><form action="{% url 'add_wish' item_id=item.id %}" class="add_wish" method="post">
+									{% csrf_token %}
+									<button type="submit">Add to my WishList</button>
+							</form></td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<a href="{% url 'create_item' %}" style="float: right; padding-right: 100px; padding-bottom: 150px;">Add Item</a>
+</body>
+</html>

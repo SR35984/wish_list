@@ -2,10 +2,12 @@
 <html>
 <head>
 	<title>Login and Register</title>
+	<style>
+		div { display: inline-block; vertical-align: top; }
+	</style>
 </head>
 <body>
 	<div class="wrapper">
-
 		{% if messages %}
 		<ul>
 			{% for message in messages %}
@@ -13,44 +15,47 @@
 			{% endfor %}
 		</ul>
 		{% endif %}
+			<h1 style="text-shadow: 3px 2px  #ccffe6;">WELCOME!</h1>
+			<h3>If You Are New To Wishing Please Register!</h3>
+			<h3>If You Are A Returning Wisher Please Login!</h3>
+			<div style="border-style:groove; padding: 5px;">
+				<form class="topform" action="{% url 'register' %}" method="post">
+					{% csrf_token %}
+					<h3>Register</h3>
+					<p>Name:</p>
+					<input type="text" name="name" />
 
-		<h1>Welcome!</h1>
-		<form class="topform" action="{% url 'register' %}" method="post">
-			{% csrf_token %}
+					<p>Username:</p>
+					<input type="text" name="user_name" />
 
-			<h3>Register</h3>
-			<p>Name:</p>
-			<input type="text" name="name" />
+					<p>Password:</p>
+					<input type="password" name="password" />
 
-			<p>Username:</p>
-			<input type="text" name="user_name" />
+					<p>Confirm PW:</p>
+					<input type="password" name="password_confirmation" />
 
-			<p>Password:</p>
-			<input type="password" name="password" />
+					<p>Date Hired:</p>
+					<input type="date" name="date_hired">
 
-			<p>Confirm PW:</p>
-			<input type="password" name="password_confirmation" />
+					<p class="btnpar">
+						<input type="submit" value="Register" />
+					</p>
+				</form>
+			</div>
+			<div style="border-style:groove; padding: 5px;">
+				<form class="btform" action="{% url 'login' %}" method="post">
+					{% csrf_token %}
+					<h3>Login</h3>
+					<p>Username:</p>
+					<input type="text" name="user_name" />
 
-			<p>Date Hired:</p>
-			<input type="date" name="date_hired">
-
-			<p class="btnpar">
-				<input type="submit" value="Register" />
-			</p>
-		</form>
-
-		<form class="btform" action="{% url 'login' %}" method="post">
-			{% csrf_token %}
-			<h3>Login</h3>
-			<p>Username:</p>
-			<input type="text" name="user_name" />
-
-			<p>Password:</p>
-			<input type="password" name="password" />
-			<p class="btnpar">
-				<input type="submit" value="Login" />
-			</p>
-		</form>
+					<p>Password:</p>
+					<input type="password" name="password" />
+					<p class="btnpar">
+						<input type="submit" value="Login" />
+					</p>
+				</form>
+			</div>
 	</div>
 </body>
 </html>

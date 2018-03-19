@@ -98,12 +98,10 @@ class ItemManager(models.Manager):
 		item = Item.objects.get(id= item_id)
 		user.wishes.add(item)
 
-
 	def remove_wish(self, item_id, user_id):
 		user = User.objects.get(id= user_id)
 		item = Item.objects.get(id= item_id)
 		user.wishes.remove(item)
-
 
 	def create_item(self, form_data, user_id):
 		user = User.objects.get(id=user_id)
